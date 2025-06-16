@@ -8,23 +8,23 @@ Completion candidates are retrieved from the REPL and can be used in both the RE
 
 1. Install the `janet-complete` module for Janet:
 
-```sh
-[sudo] jpm install https://github.com/tttuuu888/janet-complete.git
-```
+    ```sh
+    [sudo] jpm install https://github.com/tttuuu888/janet-complete.git
+    ```
 
 2. Ensure the REPL has loaded the module by evaluating `(use complete)`.
 
-You can automate this by setting the Janet profile:
-
-```sh
-export JANET_PROFILE=$HOME/.config/janet/init.janet
-```
-
-And adding the following to your init.janet:
-
-```
-(use complete)
-```
+    You can automate this by setting the Janet profile:
+    
+    ```sh
+    export JANET_PROFILE=$HOME/.config/janet/init.janet
+    ```
+    
+    And adding the following to your init.janet:
+    
+    ```
+    (use complete)
+    ```
 
 ## Installation
 
