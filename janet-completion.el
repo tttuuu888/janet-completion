@@ -34,6 +34,7 @@
 ;; - `inf-janet`
 
 ;;; Code:
+(require 'inf-janet)
 
 (defvar janet-completion-completion-cache nil
   "Cache for Janet completion results.")
@@ -56,7 +57,7 @@
           (progn
             (set-process-filter
              proc
-             (lambda (proc string)
+             (lambda (_proc string)
                (with-current-buffer output-buffer
                  (insert string))))
             (process-send-string proc cmd)
@@ -85,8 +86,7 @@
 (defun janet-completion-completion-at-point ()
   "Determine the region at point to complete, and return completion data."
   (let* ((beg (save-excursion (skip-syntax-backward "w_") (point)))
-         (end (save-excursion (skip-syntax-forward "w_") (point)))
-         (prefix (buffer-substring-no-properties beg end)))
+         (end (save-excursion (skip-syntax-forward "w_") (point))))
     (when (and (inf-janet-connected-p)
                (> end beg))
       (list beg end (janet-completion-completion-table)))))
