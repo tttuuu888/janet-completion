@@ -91,14 +91,10 @@ Return nil if no REPL is connected or if the symbol length is shorter than
               (bounds (bounds-of-thing-at-point 'symbol))
               (prefix (buffer-substring-no-properties (car bounds) (cdr bounds)))
               ((>= (length prefix) janet-completion-minimum-prefix-length)))
-    (let ((candidates 'unset))
-      (list (car bounds) (cdr bounds)
-            (completion-table-dynamic
-             (lambda (_string)
-               (when (eq candidates 'unset)
-                 (setq candidates (janet-completion--fetch prefix)))
-               candidates))
-            :exclusive 'no))))
+    (list (car bounds) (cdr bounds)
+          (completion-table-with-cache
+           (lambda (_string) (janet-completion--fetch prefix)))
+          :exclusive 'no)))
 
 (define-minor-mode janet-completion-local-mode
   "Provide Janet symbol completion in the current buffer.
