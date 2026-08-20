@@ -60,10 +60,6 @@
   "<janet-completion>\\([^\0]*?\\)</janet-completion>"
   "Regexp for the tagged answer of `janet-completion--query'.")
 
-(defun janet-completion--remove-ansi-escape-sequences (str)
-  "Remove ANSI escape sequences from STR."
-  (replace-regexp-in-string "\x1b\\[[0-9;]*[a-zA-Z]" "" str))
-
 (defun janet-completion--fetch (prefix)
   "Fetch bindings starting with PREFIX from the Janet REPL.
 Return a list of completion strings, or nil on timeout."
@@ -85,8 +81,7 @@ Return a list of completion strings, or nil on timeout."
               (setq answer (match-string 1 output)))))
       (set-process-filter proc original-filter))
     (when answer
-      (split-string (janet-completion--remove-ansi-escape-sequences answer)
-                    "[ \t\r\n]+" t))))
+      (split-string answer "[ \t\r\n]+" t))))
 
 (defun janet-completion-completion-at-point ()
   "Return completion data for the symbol at point.
